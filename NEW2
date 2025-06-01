@@ -1,0 +1,44 @@
+
+import time
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from bs4 import BeautifulSoup
+import os
+
+# Setup Chrome driver
+chrome_path = r"C:\Users\dell\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
+service = Service(executable_path=chrome_path)
+options = webdriver.ChromeOptions()
+driver = webdriver.Chrome(service=service, options=options)
+
+# Load the CSV file
+df = pd.read_csv("transcripts.csv")
+
+# Create output folder
+os.makedirs("transcripts", exist_ok=True)
+
+# Function to scrape transcript text
+def scrape_transcript(url):
+    driver.get(url)
+    time.sleep(5)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    transcript_text = ""
+    for p in soup.find_all("p"):
+        transcript_text += p.get_text() + "\n"
+    return transcript_text.strip()
+
+# Iterate over each row in the CSV
+for index, row in df.iterrows():
+    ticker = row["ticker"]
+    date = str(row["date"]).split(" ")[0]
+    url = row["url"]
+    transcript_text = scrape_transcript(url)
+    filename = f"transcripts/{ticker}_{date}.txt"
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(transcript_text)
+    print(f"Saved transcript for {ticker} on {date} to {filename}")
+
+# Close browser
+driver.quit()
