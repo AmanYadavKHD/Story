@@ -1,0 +1,61 @@
+
+import time
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from bs4 import BeautifulSoup
+from datetime import datetime
+
+# List of tickers
+tickers = [
+    "MSFT", "NVDA", "AAPL", "AMZN", "GOOG", "GOOGL", "META", "TSLA", "AVGO", "BRK.A", "BRK.B", "TSM", "WMT", "JPM", "V", "LLY", "MA", "NFLX", "ORCL", "COST",
+    "XOM", "PG", "JNJ", "HD", "SAP", "BAC", "ABBV", "NVO", "KO", "SMFG", "ASML", "PLTR", "BABA", "PM", "TMUS", "UNH", "GE", "CRM", "TM", "CSCO", "WFC",
+    "CVX", "IBM", "ABT", "CMCSA", "MCD", "NVS", "AZN", "LIN", "ACN"
+]
+
+# Setup Chrome driver
+chrome_path = r"C:\Users\dell\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
+service = Service(executable_path=chrome_path)
+options = webdriver.ChromeOptions()
+driver = webdriver.Chrome(service=service, options=options)
+
+# Function to get transcript info
+def get_transcripts(ticker):
+    url = f"https://seekingalpha.com/symbol/{ticker}/transcripts"
+    driver.get(url)
+    time.sleep(5)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    articles = soup.find_all("article")
+    results = []
+    for article in articles:
+        try:
+            title = article.find("h3").text.strip()
+            link = article.find("a")["href"]
+            date_str = article.find("span").text.strip()
+            date = pd.to_datetime(date_str, errors='coerce')
+            if pd.notnull(date) and date > datetime(2022, 1, 1):
+                results.append({
+                    "ticker": ticker,
+                    "title": title,
+                    "url": f"https://seekingalpha.com{link}",
+                    "date": date
+                })
+        except Exception as e:
+            continue
+    return results
+
+# Collect data
+all_data = []
+for ticker in tickers:
+    print(f"Fetching transcripts for {ticker}...")
+    all_data.extend(get_transcripts(ticker))
+
+# Save to CSV
+df = pd.DataFrame(all_data)
+df.to_csv("transcripts.csv", index=False)
+print("Saved transcripts to transcripts.csv")
+
+# Close browser
+driver.quit()
+
