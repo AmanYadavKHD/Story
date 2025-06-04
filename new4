@@ -145,3 +145,68 @@ def prepare_chunks(data, max_chunk_chars=1000, overlap=200):
             all_chunks.append(chunk)
 
     return all_chunks
+
+
+
+#embedding
+from sentence_transformers import SentenceTransformer
+import numpy as np
+import faiss
+from tqdm import tqdm
+
+# Load pre-trained open-source model (small and fast)
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+def embed_chunks(chunks):
+    texts = [chunk['content'] for chunk in chunks]
+    embeddings = model.encode(texts, show_progress_bar=True, convert_to_numpy=True)
+    return embeddings.astype('float32')
+
+def build_faiss_index(embedding_vectors):
+    dim = embedding_vectors.shape[1]
+    index = faiss.IndexFlatL2(dim)  # L2 distance index
+    index.add(embedding_vectors)
+    return index
+
+
+import json
+import faiss
+from utils.load_data import load_transcript_data
+from utils.validate_data import validate_transcripts
+from utils.chunk_data import prepare_chunks
+from utils.embed_data import embed_chunks, build_faiss_index
+
+def save_json(data, path):
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+def save_faiss_index(index, path):
+    faiss.write_index(index, path)
+
+def main():
+    data = load_transcript_data()
+    errors = validate_transcripts(data)
+    if errors:
+        print("⚠️ Validation errors:")
+        for err in errors:
+            print(err)
+        return
+    print("✅ Data valid.")
+
+    chunks = prepare_chunks(data)
+    print(f"Chunks prepared: {len(chunks)}")
+
+    embeddings = embed_chunks(chunks)
+    print("✅ Embeddings generated.")
+
+    index = build_faiss_index(embeddings)
+    print("✅ FAISS index built.")
+
+    save_json(chunks, 'Data_Ingestion/chunks_metadata.json')
+    save_faiss_index(index, 'Data_Ingestion/faiss_index.bin')
+
+    print("✅ Saved chunk metadata and FAISS index.")
+
+if __name__ == "__main__":
+    main()
+
