@@ -332,3 +332,6 @@ with open(output_path, 'w', encoding='utf-8') as f:
 
 print(f"Data cleaned and saved to {output_path}")
 
+
+
+6/3/25, 1:14 AM ADBE - Transcripts https://app.koyfin.com/news/ts/eq-tt4i45/all/1819050563?sourceType=transcript 2/18
