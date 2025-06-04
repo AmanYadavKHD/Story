@@ -226,3 +226,109 @@ with open(output_path, 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 
 print(f"Cleaned and enriched data saved to {output_path}")
+
+
+
+
+
+
+
+
+
+
+
+import json
+import re
+import os
+
+# Folder path adjustment (assuming script runs inside Data_Cleaning)
+current_dir = os.getcwd()
+input_path = os.path.abspath(os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data.json'))
+output_path = os.path.abspath(os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data_cleaned.json'))
+
+# Regex pattern to remove date, time, ticker, url, and page number inside content
+pattern = r'\d{1,2}/\d{1,2}/\d{2,4}, \d{1,2}:\d{2} (?:AM|PM) [A-Z]{2,5} - Transcripts https?://\S+ \d{1,2}/\d{1,2}'
+
+# Your company-to-ticker mapping (use exact keys as in your JSON "company" field)
+company_ticker_map = {
+    "Adobe_Inc": "ADBE",
+    "Advanced_Micro_Devices_Inc": "AMD",
+    "Alphabet Inc. Class A Common Stock": "GOOGL",
+    "Alphabet Inc. Class C Capital Stock": "GOOG",
+    "Amazon.com Inc. Common Stock": "AMZN",
+    "Amgen_Inc": "AMGN",
+    "Analog_Devices_Inc": "ADI",
+    "Apple Inc. Common Stock": "AAPL",
+    "Automatic_Data_Processing_Inc": "ADP",
+    "Biogen_Inc": "BIIB",
+    "Booking_Holdings_Inc": "BKNG",
+    "Broadcom Inc. Common Stock": "AVGO",
+    "Cadence_Design_Systems_Inc": "CDNS",
+    "Charter_Communications_Inc": "CHTR",
+    "Cintas_Corporation": "CTAS",
+    "Cisco_Systems_Inc": "CSCO",
+    "Costco_Wholesale_Corporation": "COST",
+    "Electronic_Arts_Inc": "EA",
+    "Exelon_Corporation": "EXC",
+    "Fiserv_Inc": "FISV",
+    "Fortinet_Inc": "FTNT",
+    "Gilead_Sciences_Inc": "GILD",
+    "Honeywell_International_Inc": "HON",
+    "IDEXX_Laboratories_Inc": "IDXX",
+    "Intel_Corporation": "INTC",
+    "Intuitive_Surgical_Inc": "ISRG",
+    "Intuit_Inc": "INTU",
+    "Keurig_Dr_Pepper_Inc": "KDP",
+    "KLA_Corporation": "KLAC",
+    "Lam_Research_Corporation": "LRCX",
+    "Marriott_International_Inc": "MAR",
+    "MercadoLibre_Inc": "MELI",
+    "Meta Platforms Inc. Class A Common Stock": "META",
+    "Micron_Technology_Inc": "MU",
+    "Microsoft Corporation Common Stock": "MSFT",
+    "Mondelez_International_Inc": "MDLZ",
+    "Monster_Beverage_Corporation": "MNST",
+    "NVIDIA Corporation Common Stock": "NVDA",
+    "Palo_Alto_Networks_Inc": "PANW",
+    "Paychex_Inc": "PAYX",
+    "PepsiCo_Inc": "PEP",
+    "QUALCOMM_Incorporated": "QCOM",
+    "Regeneron_Pharmaceuticals_Inc": "REGN",
+    "Ross_Stores_Inc": "ROST",
+    "Starbucks_Corporation": "SBUX",
+    "T-Mobile_US_Inc": "TMUS",
+    "Tesla Inc. Common Stock": "TSLA",
+    "Texas_Instruments_Incorporated": "TXN",
+    "Vertex_Pharmaceuticals_Incorporated": "VRTX",
+    "Warner_Bros_Discovery_Inc": "WBD"
+}
+
+def clean_content(text):
+    # Remove the pattern from content string
+    cleaned = re.sub(pattern, '', text)
+    # Remove extra whitespace/newlines if any
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    return cleaned
+
+# Load JSON data
+with open(input_path, 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Process each entry: clean content and add ticker
+for entry in data:
+    # Clean content field only
+    if 'content' in entry and isinstance(entry['content'], str):
+        entry['content'] = clean_content(entry['content'])
+    # Add ticker if company found in map
+    company_name = entry.get('company')
+    if company_name in company_ticker_map:
+        entry['ticker'] = company_ticker_map[company_name]
+    else:
+        entry['ticker'] = None  # Or skip adding ticker or add 'Unknown'
+
+# Save cleaned JSON
+with open(output_path, 'w', encoding='utf-8') as f:
+    json.dump(data, f, indent=2)
+
+print(f"Data cleaned and saved to {output_path}")
+
