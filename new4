@@ -108,3 +108,101 @@ dar--l        06/03/2025  12:19 AM                Tesla Inc. Common Stock
 dar--l        06/03/2025  11:06 AM                Texas_Instruments_Incorporated
 dar--l        06/03/2025  12:00 PM                Vertex_Pharmaceuticals_Incorporated
 dar--l        06/03/2025   2:18 PM                Warner_Bros_Discovery_Inc
+
+
+
+
+
+
+import json
+import re
+import os
+
+# Path to your file
+input_path = os.path.join("Data_Ingestion", "final_speaker_role_content_data.json")
+output_path = os.path.join("Data_Ingestion", "final_speaker_role_content_data_cleaned.json")
+
+# Regex pattern to remove unwanted string
+pattern = r'\d{1,2}/\d{1,2}/\d{2,4}, \d{1,2}:\d{2} (AM|PM) [A-Z]{2,5} - Transcripts https?://\S+ \d{1,2}/\d{1,2}'
+
+def clean_content(text):
+    cleaned_text = re.sub(pattern, '', text)
+    cleaned_text = re.sub(r'\s+', ' ', cleaned_text).strip()
+    return cleaned_text
+
+# Sample ticker dictionary based on your company names — please adjust tickers as per your official list
+company_to_ticker = {
+    "Adobe_Inc": "ADBE",
+    "Advanced_Micro_Devices_Inc": "AMD",
+    "Alphabet Inc. Class A Common Stock": "GOOGL",
+    "Alphabet Inc. Class C Capital Stock": "GOOG",
+    "Amazon.com Inc. Common Stock": "AMZN",
+    "Amgen_Inc": "AMGN",
+    "Analog_Devices_Inc": "ADI",
+    "Apple Inc. Common Stock": "AAPL",
+    "Automatic_Data_Processing_Inc": "ADP",
+    "Biogen_Inc": "BIIB",
+    "Booking_Holdings_Inc": "BKNG",
+    "Broadcom Inc. Common Stock": "AVGO",
+    "Cadence_Design_Systems_Inc": "CDNS",
+    "Charter_Communications_Inc": "CHTR",
+    "Cintas_Corporation": "CTAS",
+    "Cisco_Systems_Inc": "CSCO",
+    "Costco_Wholesale_Corporation": "COST",
+    "Electronic_Arts_Inc": "EA",
+    "Exelon_Corporation": "EXC",
+    "Fiserv_Inc": "FISV",
+    "Fortinet_Inc": "FTNT",
+    "Gilead_Sciences_Inc": "GILD",
+    "Honeywell_International_Inc": "HON",
+    "IDEXX_Laboratories_Inc": "IDXX",
+    "Intel_Corporation": "INTC",
+    "Intuitive_Surgical_Inc": "ISRG",
+    "Intuit_Inc": "INTU",
+    "Keurig_Dr_Pepper_Inc": "KDP",
+    "KLA_Corporation": "KLAC",
+    "Lam_Research_Corporation": "LRCX",
+    "Marriott_International_Inc": "MAR",
+    "MercadoLibre_Inc": "MELI",
+    "Meta Platforms Inc. Class A Common Stock": "META",
+    "Micron_Technology_Inc": "MU",
+    "Microsoft Corporation Common Stock": "MSFT",
+    "Mondelez_International_Inc": "MDLZ",
+    "Monster_Beverage_Corporation": "MNST",
+    "NVIDIA Corporation Common Stock": "NVDA",
+    "Palo_Alto_Networks_Inc": "PANW",
+    "Paychex_Inc": "PAYX",
+    "PepsiCo_Inc": "PEP",
+    "QUALCOMM_Incorporated": "QCOM",
+    "Regeneron_Pharmaceuticals_Inc": "REGN",
+    "Ross_Stores_Inc": "ROST",
+    "Starbucks_Corporation": "SBUX",
+    "T-Mobile_US_Inc": "TMUS",
+    "Tesla Inc. Common Stock": "TSLA",
+    "Texas_Instruments_Incorporated": "TXN",
+    "Vertex_Pharmaceuticals_Incorporated": "VRTX",
+    "Warner_Bros_Discovery_Inc": "WBD",
+}
+
+# Load JSON
+with open(input_path, 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Process each record
+for record in data:
+    # Clean content
+    if 'content' in record:
+        record['content'] = clean_content(record['content'])
+    
+    # Add ticker field if company matches
+    company = record.get('company')
+    if company in company_to_ticker:
+        record['ticker'] = company_to_ticker[company]
+    else:
+        record['ticker'] = "UNKNOWN"
+
+# Save cleaned JSON
+with open(output_path, 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+
+print(f"Cleaned and enriched data saved to {output_path}")
