@@ -244,3 +244,58 @@ if __name__ == "__main__":
         print(res['content'])
         print("-" * 80)
 
+
+# main.py for FAST API for searching the querry similarity.
+from fastapi import FastAPI, Query
+from pydantic import BaseModel
+from typing import List
+import faiss
+import json
+import textwrap
+
+from utils.embed_data import model  # SentenceTransformer loaded here
+
+app = FastAPI(title="Financial Transcript Search API")
+
+# Load vector index + chunk metadata once at startup
+index = faiss.read_index("Data_Ingestion/faiss_index.bin")
+with open("Data_Ingestion/chunks_metadata.json", "r", encoding="utf-8") as f:
+    chunks = json.load(f)
+
+
+class SearchResult(BaseModel):
+    company: str
+    date: str
+    quarter: str
+    year: int
+    speaker: str
+    role: str
+    content: str
+    score: float
+
+
+@app.get("/search", response_model=List[SearchResult])
+def search_transcripts(query: str = Query(..., description="Your financial query"), top_k: int = 5):
+    # Step 1: Embed the query
+    q_emb = model.encode([query], convert_to_numpy=True).astype('float32')
+
+    # Step 2: Search using FAISS
+    distances, indices = index.search(q_emb, top_k)
+
+    results = []
+    for idx, i in enumerate(indices[0]):
+        item = chunks[i]
+        result = {
+            "company": item["company"],
+            "date": item["date"],
+            "quarter": item["quarter"],
+            "year": item["year"],
+            "speaker": item["speaker"],
+            "role": item["role"],
+            "content": textwrap.shorten(item["content"], width=500, placeholder="..."),
+            "score": round(1 / (1 + distances[0][idx]), 4)  # similarity
+        }
+        results.append(result)
+
+    return results
+
