@@ -245,51 +245,39 @@ if __name__ == "__main__":
         print("-" * 80)
 
 
-#Gradio app used to display result for sementically analysing the querry in the vector db.
-import gradio as gr
+# app.py
+import streamlit as st
+from sentence_transformers import SentenceTransformer
 import faiss
 import json
 import textwrap
-from sentence_transformers import SentenceTransformer
 
-# Load model
+# Load model and index
 model = SentenceTransformer("all-MiniLM-L6-v2")
-
-# Load FAISS index
 index = faiss.read_index("Data_Ingestion/faiss_index.bin")
 
 # Load metadata
 with open("Data_Ingestion/chunks_metadata.json", "r", encoding="utf-8") as f:
     chunks = json.load(f)
 
-# Define the search function
-def search_transcripts(query, top_k):
-    q_emb = model.encode([query], convert_to_numpy=True).astype('float32')
+st.title("📊 Financial Transcript Search")
+st.subheader("Semantic search over earnings call transcripts")
+
+query = st.text_input("Enter your financial query:")
+top_k = st.slider("Number of results", min_value=1, max_value=10, value=5)
+
+if st.button("Search") and query:
+    q_emb = model.encode([query], convert_to_numpy=True).astype("float32")
     distances, indices = index.search(q_emb, top_k)
 
-    results = []
     for idx, i in enumerate(indices[0]):
         item = chunks[i]
         score = round(1 / (1 + distances[0][idx]), 4)
-        text = f"""**{item['company']} | {item['quarter']} {item['year']} | {item['date']}**  
-🧑 {item['speaker']} ({item['role']})  
-📄 **Score**: {score}  
-{textwrap.shorten(item['content'], width=400, placeholder="...")}"""
-        results.append(text)
-    
-    return "\n\n---\n\n".join(results)
-
-# Create Gradio interface
-iface = gr.Interface(
-    fn=search_transcripts,
-    inputs=[
-        gr.Textbox(lines=2, placeholder="Enter financial question...", label="Your Query"),
-        gr.Slider(minimum=1, maximum=10, step=1, value=5, label="Top K Results")
-    ],
-    outputs=gr.Markdown(label="Results"),
-    title="🔍 Financial Transcript Search",
-    description="Query a financial Q&A database with semantic search powered by FAISS + SBERT."
-)
-
-# Launch it
-iface.launch(share=False)
+        st.markdown(f"""
+        ### {item['company']} | {item['quarter']} {item['year']}  
+        🗓️ {item['date']}  
+        🧑 {item['speaker']} ({item['role']})  
+        🔍 **Relevance Score**: {score}  
+        > {textwrap.shorten(item['content'], width=500, placeholder="...")}
+        ---
+        """)
