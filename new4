@@ -56,7 +56,7 @@ def validate_transcripts(data):
 from utils.load_data import load_transcript_data
 from utils.filter_data import filter_transcripts
 from utils.validate_data import validate_transcripts
-
+from utils.chunk_data import prepare_chunks
 # Step 1: Load
 data = load_transcript_data()
 
@@ -73,10 +73,63 @@ else:
 # Step 3: Filter
 results = filter_transcripts(data, company='Apple', year=2025, quarter='Q1', keyword='sales')
 
-# Step 4: Show results
+# Step 4: Chunking
+chunks = prepare_chunks(data)
+print(f"✅ Prepared {len(chunks)} semantic chunks.")
+print(chunks[0])
+
+# Step 5: Show results
 for res in results:
     print(f"{res['date']} - {res['speaker']} ({res['role']}):")
     print(res['content'])
     print('-' * 80)
 
+#chunking
+import textwrap
 
+def prepare_chunks(data, max_chunk_chars=1000, overlap=200):
+    """
+    Prepares semantic chunks with metadata.
+    Long content is split into smaller overlapping chunks.
+
+    Parameters:
+    - data: list of transcript dicts (already per speaker)
+    - max_chunk_chars: max characters per chunk (default: 1000)
+    - overlap: number of overlapping chars between chunks (default: 200)
+
+    Returns:
+    - List of chunk dicts with metadata and short content
+    """
+    all_chunks = []
+
+    for item in data:
+        content = item.get("content", "")
+        if not content.strip():
+            continue
+
+        # Break content into overlapping chunks
+        chunks = []
+        if len(content) <= max_chunk_chars:
+            chunks = [content]
+        else:
+            start = 0
+            while start < len(content):
+                end = start + max_chunk_chars
+                chunk = content[start:end]
+                chunks.append(chunk.strip())
+                start += max_chunk_chars - overlap
+
+        # Attach metadata to each chunk
+        for chunk_text in chunks:
+            chunk = {
+                "company": item.get("company"),
+                "quarter": item.get("quarter"),
+                "year": item.get("year"),
+                "date": item.get("date"),
+                "speaker": item.get("speaker"),
+                "role": item.get("role"),
+                "content": chunk_text
+            }
+            all_chunks.append(chunk)
+
+    return all_chunks
