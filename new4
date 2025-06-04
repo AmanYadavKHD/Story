@@ -335,3 +335,111 @@ print(f"Data cleaned and saved to {output_path}")
 
 
 6/3/25, 1:14 AM ADBE - Transcripts https://app.koyfin.com/news/ts/eq-tt4i45/all/1819050563?sourceType=transcript 2/18
+
+
+
+
+
+
+
+
+import json
+import re
+import os
+
+# Folder paths
+input_file = os.path.join("Data_Ingestion", "final_speaker_role_content_data.json")
+output_file = os.path.join("Data_Ingestion", "final_cleaned_ticker_data.json")
+
+# Full company to ticker mapping from your data (assuming these are tickers or short forms)
+company_to_ticker = {
+    "Adobe_Inc": "ADBE",
+    "Advanced_Micro_Devices_Inc": "AMD",
+    "Alphabet Inc. Class A Common Stock": "GOOGL",
+    "Alphabet Inc. Class C Capital Stock": "GOOG",
+    "Amazon.com Inc. Common Stock": "AMZN",
+    "Amgen_Inc": "AMGN",
+    "Analog_Devices_Inc": "ADI",
+    "Apple Inc. Common Stock": "AAPL",
+    "Automatic_Data_Processing_Inc": "ADP",
+    "Biogen_Inc": "BIIB",
+    "Booking_Holdings_Inc": "BKNG",
+    "Broadcom Inc. Common Stock": "AVGO",
+    "Cadence_Design_Systems_Inc": "CDNS",
+    "Charter_Communications_Inc": "CHTR",
+    "Cintas_Corporation": "CTAS",
+    "Cisco_Systems_Inc": "CSCO",
+    "Costco_Wholesale_Corporation": "COST",
+    "Electronic_Arts_Inc": "EA",
+    "Exelon_Corporation": "EXC",
+    "Fiserv_Inc": "FISV",
+    "Fortinet_Inc": "FTNT",
+    "Gilead_Sciences_Inc": "GILD",
+    "Honeywell_International_Inc": "HON",
+    "IDEXX_Laboratories_Inc": "IDXX",
+    "Intel_Corporation": "INTC",
+    "Intuitive_Surgical_Inc": "ISRG",
+    "Intuit_Inc": "INTU",
+    "Keurig_Dr_Pepper_Inc": "KDP",
+    "KLA_Corporation": "KLAC",
+    "Lam_Research_Corporation": "LRCX",
+    "Marriott_International_Inc": "MAR",
+    "MercadoLibre_Inc": "MELI",
+    "Meta Platforms Inc. Class A Common Stock": "META",
+    "Micron_Technology_Inc": "MU",
+    "Microsoft Corporation Common Stock": "MSFT",
+    "Mondelez_International_Inc": "MDLZ",
+    "Monster_Beverage_Corporation": "MNST",
+    "NVIDIA Corporation Common Stock": "NVDA",
+    "Palo_Alto_Networks_Inc": "PANW",
+    "Paychex_Inc": "PAYX",
+    "PepsiCo_Inc": "PEP",
+    "QUALCOMM_Incorporated": "QCOM",
+    "Regeneron_Pharmaceuticals_Inc": "REGN",
+    "Ross_Stores_Inc": "ROST",
+    "Starbucks_Corporation": "SBUX",
+    "T-Mobile_US_Inc": "TMUS",
+    "Tesla Inc. Common Stock": "TSLA",
+    "Texas_Instruments_Incorporated": "TXN",
+    "Vertex_Pharmaceuticals_Incorporated": "VRTX",
+    "Warner_Bros_Discovery_Inc": "WBD"
+}
+
+# Regex pattern to remove the unwanted transcript metadata in content
+pattern = re.compile(
+    r'\d{1,2}/\d{1,2}/\d{2,4}, '           # Date + comma + space
+    r'\d{1,2}:\d{2} (?:AM|PM) '             # Time with AM/PM + space
+    r'[A-Z0-9\-]+ - Transcripts '            # Ticker + " - Transcripts "
+    r'https?://\S+ '                         # URL + space
+    r'\d{1,2}/\d{1,2}'                      # Page number like 2/18
+)
+
+def clean_content(text):
+    """Remove the unwanted pattern from content text."""
+    if text:
+        cleaned = pattern.sub('', text)
+        cleaned = re.sub(r'\s{2,}', ' ', cleaned).strip()
+        return cleaned
+    return text
+
+def add_ticker(company_name):
+    """Map company name to ticker symbol."""
+    return company_to_ticker.get(company_name, "UNKNOWN")
+
+def main():
+    with open(input_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    for record in data:
+        record['content'] = clean_content(record.get('content', ''))
+        company = record.get('company', '')
+        record['ticker'] = add_ticker(company)
+
+    with open(output_file, 'w', encoding='utf-8') as f_out:
+        json.dump(data, f_out, indent=4, ensure_ascii=False)
+
+    print(f"Data cleaned and saved to {output_file}")
+
+if __name__ == "__main__":
+    main()
+
