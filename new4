@@ -114,21 +114,41 @@ dar--l        06/03/2025   2:18 PM                Warner_Bros_Discovery_Inc
 
 
 
+import os
+
+# Assuming your script is running inside Data_Cleaning folder
+current_dir = os.getcwd()  # will give .../Project/Data_Cleaning
+
+# Move up one directory and then into Data_Ingestion
+input_path = os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data.json')
+output_path = os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data_cleaned.json')
+
+# Normalize the paths to remove .. and make absolute if you want
+input_path = os.path.abspath(input_path)
+output_path = os.path.abspath(output_path)
+
+print("Input JSON path:", input_path)
+print("Output JSON path:", output_path)
+
+
+
+
 import json
 import re
 import os
 
-# Path to your file
-input_path = os.path.join("Data_Ingestion", "final_speaker_role_content_data.json")
-output_path = os.path.join("Data_Ingestion", "final_speaker_role_content_data_cleaned.json")
+current_dir = os.getcwd()
+input_path = os.path.abspath(os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data.json'))
+output_path = os.path.abspath(os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data_cleaned.json'))
 
-# Regex pattern to remove unwanted string
 pattern = r'\d{1,2}/\d{1,2}/\d{2,4}, \d{1,2}:\d{2} (AM|PM) [A-Z]{2,5} - Transcripts https?://\S+ \d{1,2}/\d{1,2}'
 
 def clean_content(text):
     cleaned_text = re.sub(pattern, '', text)
     cleaned_text = re.sub(r'\s+', ' ', cleaned_text).strip()
     return cleaned_text
+
+# Rest of your code...
 
 # Sample ticker dictionary based on your company names — please adjust tickers as per your official list
 company_to_ticker = {
