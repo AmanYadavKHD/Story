@@ -210,3 +210,37 @@ def main():
 if __name__ == "__main__":
     main()
 
+
+#search.py to load index + metadata and perform querries.
+
+import json
+import faiss
+import numpy as np
+from utils.embed_data import model
+
+def load_faiss_index(path='Data_Ingestion/faiss_index.bin'):
+    return faiss.read_index(path)
+
+def load_chunks_metadata(path='Data_Ingestion/chunks_metadata.json'):
+    with open(path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def search(query, chunks, index, top_k=5):
+    q_emb = model.encode([query], convert_to_numpy=True).astype('float32')
+    distances, indices = index.search(q_emb, top_k)
+    results = [chunks[i] for i in indices[0]]
+    return results
+
+if __name__ == "__main__":
+    index = load_faiss_index()
+    chunks = load_chunks_metadata()
+
+    query = input("Enter your query: ")
+    results = search(query, chunks, index, top_k=5)
+
+    print("\nTop Results:\n")
+    for res in results:
+        print(f"{res['date']} - {res['speaker']} ({res['role']}) at {res['company']}:")
+        print(res['content'])
+        print("-" * 80)
+
