@@ -339,19 +339,16 @@ print(f"Data cleaned and saved to {output_path}")
 
 
 
-
-
-
-
 import json
 import re
 import os
 
-# Folder paths
-input_file = os.path.join("Data_Ingestion", "final_speaker_role_content_data.json")
-output_file = os.path.join("Data_Ingestion", "final_cleaned_ticker_data.json")
+# Correct path from Data_Cleaning/ to read from Data_Ingestion/
+base_path = os.path.join(os.path.dirname(__file__), '..', 'Data_Ingestion')
+input_file = os.path.join(base_path, 'final_speaker_role_content_data.json')
+output_file = os.path.join(base_path, 'final_cleaned_ticker_data.json')
 
-# Full company to ticker mapping from your data (assuming these are tickers or short forms)
+# Full mapping of companies to ticker symbols
 company_to_ticker = {
     "Adobe_Inc": "ADBE",
     "Advanced_Micro_Devices_Inc": "AMD",
@@ -405,21 +402,20 @@ company_to_ticker = {
     "Warner_Bros_Discovery_Inc": "WBD"
 }
 
-# Regex pattern to remove the unwanted transcript metadata in content
+# Regex pattern to remove the unwanted transcript metadata
 pattern = re.compile(
     r'\d{1,2}/\d{1,2}/\d{2,4}, '           # Date + comma + space
-    r'\d{1,2}:\d{2} (?:AM|PM) '             # Time with AM/PM + space
-    r'[A-Z0-9\-]+ - Transcripts '            # Ticker + " - Transcripts "
-    r'https?://\S+ '                         # URL + space
-    r'\d{1,2}/\d{1,2}'                      # Page number like 2/18
+    r'\d{1,2}:\d{2} (?:AM|PM) '            # Time with AM/PM + space
+    r'[A-Z0-9\-]+ - Transcripts '          # Ticker + " - Transcripts "
+    r'https?://\S+ '                      # URL + space
+    r'\d{1,2}/\d{1,2}'                    # Page number like 2/18
 )
 
 def clean_content(text):
-    """Remove the unwanted pattern from content text."""
+    """Remove the unwanted transcript header pattern from the content."""
     if text:
         cleaned = pattern.sub('', text)
-        cleaned = re.sub(r'\s{2,}', ' ', cleaned).strip()
-        return cleaned
+        return re.sub(r'\s{2,}', ' ', cleaned).strip()
     return text
 
 def add_ticker(company_name):
@@ -432,14 +428,12 @@ def main():
 
     for record in data:
         record['content'] = clean_content(record.get('content', ''))
-        company = record.get('company', '')
-        record['ticker'] = add_ticker(company)
+        record['ticker'] = add_ticker(record.get('company', ''))
 
     with open(output_file, 'w', encoding='utf-8') as f_out:
         json.dump(data, f_out, indent=4, ensure_ascii=False)
 
-    print(f"Data cleaned and saved to {output_file}")
+    print(f"[✅] Cleaned file saved to: {output_file}")
 
 if __name__ == "__main__":
     main()
-
