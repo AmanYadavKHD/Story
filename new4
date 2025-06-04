@@ -1,334 +1,82 @@
-company"Adobe_Inc"
-file_name"ADBE - Transcripts_Q1_2023.pdf"
-quarter"Q1"
-year"2023"
-date"Wednesday, March 15, 2023 5:00 PM"
-speaker"Shantanu Narayen"
-role"Executive"
-content"Thanks, Dan. Adobe's Q1 results underscore our strong momentum and the significant opportunities we have across our businesses. We're thrilled to be back in Las Vegas for Adobe Summit next week. In addition to unveiling several new innovations across Experience Cloud, Creative Cloud and Document Cloud, we will share how we are building on our decades of AI leadership to deliver generative AI technologies that redefine creativity and customer experiences. We look forward to seeing you there. Adobe's employees around the world motivate us to continuously raise the bar and create the future. This quarter, we were named to Glassdoor's Best Places to Work, Bloomberg's Gender- Equality Index for the fifth year in a row; and the CDP A List, which recognizes leadership and environmental impact. Our renowned brand, mission-critical products, and vast base of customers create an unmatched advantage that will fuel our growth. Thank you, and we will now take questions. Operator?"
-company"Adobe_Inc"
-file_name"ADBE - Transcripts_Q1_2023.pdf"
-quarter"Q1"
-year"2023"
-date"Wednesday, March 15, 2023 5:00 PM"
-speaker"Operator"
-role"Operator"
-content"[Operator Instructions] And we'll take our first question from the line of Brad Zelnick with Deutsche Bank."
-company"Adobe_Inc"
-file_name"ADBE - Transcripts_Q1_2023.pdf"
-quarter"Q1"
-year"2023"
-date"Wednesday, March 15, 2023 5:00 PM"
-speaker"Brad Zelnick"
-role"Analyst"
-content"Congrats on a really strong start to the year. Dan, your guidance explicitly embeds assumptions for the macro environment. Can you share with us what those are and how those assumptions might have changed from a few months ago when you last guided? 6/3/25, 1:14 AM ADBE - Transcripts https://app.koyfin.com/news/ts/eq-tt4i45/all/1819050563?sourceType=transcript 7/18"
-company"Adobe_Inc"
-file_name"ADBE - Transcripts_Q1_2023.pdf"
-quarter"Q1"
-year"2023"
-date"Wednesday, March 15, 2023 5:00 PM"
-speaker"Daniel Durn"
-role"Executive"
-content"Yes. Thanks, Brad. There's really no change in our view in the macro environment. I think we're pretty clear, at the time we set our annual guidance, the environment that we're in. We see the environment that others see. I think you can see that the company is performing really well against that backdrop. So we feel good about how we're situated, the way in which we're engaging with customers and its broad diversified performance across that environment. And so we like how we're set up, but there's really no change to the assumptions underlying the macro environment. We see the same environment that others do."
-company"Adobe_Inc"
-file_name"ADBE - Transcripts_Q1_2023.pdf"
-quarter"Q1"
-year"2023"
-date"Wednesday, March 15, 2023 5:00 PM"
-speaker"Operator"
-role"Operator"
-content"And we'll take our next question from the line of Alex Zukin with Wolfe Research."
-company"Adobe_Inc"
-file_name"ADBE - Transcripts_Q1_2023.pdf"
-quarter"Q1"
-year"2023"
-date"Wednesday, March 15, 2023 5:00 PM"
-speaker"Aleksandr Zukin"
-role"Analyst"
-content"So maybe just what do you think is the driving force behind -- so many companies are talking about longer sales cycles, difficulty closing business. You had an outstanding quarter, specifically within the Enterprise. So maybe what's driving those macro headwinds for others that you're not seeing, or your resiliency specifically? And then on the topic of metrics, every metric was strong as we looked at revenues, RPO, Digital Media ARR, operating margins. But maybe just can you talk about deferred revenue in the quarter? Anything there that was a headwind? Because it did look like free cash flow was a little bit lighter than what we were expecting."
-company"Adobe_Inc"
-file_name"ADBE - Transcripts_Q1_2023.pdf"
-quarter"Q1"
-year"2023"
-date"Wednesday, March 15, 2023 5:00 PM"
-speaker"Shantanu Narayen"
-role"Executive"
-content"I'll take the first, Alex, and then maybe Dan can speak to the second. I mean I think, as Dan said, when we look at the macroeconomic situation, and you can see strong companies actually refer to this across the board, whether it's consumers, whether it's small and medium businesses, whether it's enterprises globally, I think the reality is that digital for them is an imperative. And really for companies that have innovative solutions, it's a tailwind. I think what a lot of companies are focused on is the message that enterprises are certainly sharing, is that if the prior focus was growth at any cost, certainly, they're looking for more profitable growth. And I think if you look at our solutions on the Creative, Document or Enterprise side, we help them. We help them with growth, but we help them with profitable growth and engaging with customers. The second thing I would say is that there's a large TAM here. And so I think our job in this environment is making sure that we have an even larger pipeline that we go address and attract because there may be some difference in the closure rates. But I think if you look at it in aggregate, our job is looking at it and saying how do we differentiate ourselves. I think the one thing also I would say, Alex, is that a lot of the companies that have single product offerings, I think they are probably seeing more headwind because a certain company may not put one part of what they offer as a priority. And I think a lot of the companies are looking at it and saying, "If we're engaging in digital, we might change our focus from content management to the implementation of the customer data platform," or there might be a focus more on 6/3/25, 1:14 AM ADBE - Transcripts https://app.koyfin.com/news/ts/eq-tt4i45/all/1819050563?sourceType=transcript 8/18 campaigns or ensuring that the advertising spend, the attribution associated with it. So I think the team has executed against continuing to try and drive a large opportunity. The other thing I think we feel good about is the fact that both Summit as well as in the U.S. and U.K., we're looking forward to being in person because we can engage more in person with them. So hopefully, that gives you some color of why perhaps the stronger companies are showing more macro strength than other companies.
+📁 project_folder/
+│
+├── Data_Ingestion/
+│   └── final_cleaned_ticker_data.json
+│
+├── main.py                  # To run everything
+├── utils/
+│   ├── __init__.py
+│   ├── load_data.py         # Load data
+│   ├── filter_data.py       # Filtering function
+│   └── validate_data.py     # Validation script
 
 
-Mode                 LastWriteTime         Company Name
-----                 -------------         ------ ----
-dar--l        06/03/2025   1:14 AM                Adobe_Inc
-dar--l        06/03/2025  11:45 AM                Advanced_Micro_Devices_Inc
-dar--l        06/03/2025  12:00 AM                Alphabet Inc. Class A Common Stock
-dar--l        06/02/2025  11:53 PM                Alphabet Inc. Class C Capital Stock
-dar--l        06/02/2025  11:53 PM                Amazon.com Inc. Common Stock
-dar--l        06/03/2025  11:06 AM                Amgen_Inc
-dar--l        06/03/2025  11:56 AM                Analog_Devices_Inc
-dar--l        06/02/2025  11:06 PM                Apple Inc. Common Stock
-dar--l        06/03/2025  12:23 PM                Automatic_Data_Processing_Inc
-dar--l        06/03/2025   2:21 PM                Biogen_Inc
-dar--l        06/03/2025  11:53 AM                Booking_Holdings_Inc
-dar--l        06/03/2025  12:24 AM                Broadcom Inc. Common Stock
-dar--l        06/03/2025  12:31 PM                Cadence_Design_Systems_Inc
-dar--l        06/03/2025   2:11 PM                Charter_Communications_Inc
-dar--l        06/03/2025  12:38 PM                Cintas_Corporation
-dar--l        06/03/2025   1:18 AM                Cisco_Systems_Inc
-dar--l        06/03/2025   1:10 AM                Costco_Wholesale_Corporation
-dar--l        06/03/2025   2:24 PM                Electronic_Arts_Inc
-dar--l        06/03/2025   2:09 PM                Exelon_Corporation
-dar--l        06/03/2025  12:14 PM                Fiserv_Inc
-dar--l        06/03/2025  12:44 PM                Fortinet_Inc
-dar--l        06/03/2025  12:06 PM                Gilead_Sciences_Inc
-dar--l        06/03/2025  11:29 AM                Honeywell_International_Inc
-dar--l        06/03/2025   2:14 PM                IDEXX_Laboratories_Inc
-dar--l        06/03/2025  11:33 AM                Intel_Corporation
-dar--l        06/03/2025  11:48 AM                Intuitive_Surgical_Inc
-dar--l        06/03/2025  11:10 AM                Intuit_Inc
-dar--l        06/03/2025  12:28 PM                Keurig_Dr_Pepper_Inc
-dar--l        06/03/2025   2:01 PM                KLA_Corporation
-dar--l        06/03/2025  12:10 PM                Lam_Research_Corporation
-dar--l        06/03/2025  12:41 PM                Marriott_International_Inc
-dar--l        06/03/2025  12:34 PM                MercadoLibre_Inc
-dar--l        06/03/2025  12:12 AM                Meta Platforms Inc. Class A Common Stock
-dar--l        06/03/2025  12:17 PM                Micron_Technology_Inc
-dar--l        06/02/2025  11:12 PM                Microsoft Corporation Common Stock
-dar--l        06/03/2025  11:51 AM                Mondelez_International_Inc
-dar--l        06/03/2025   2:04 PM                Monster_Beverage_Corporation
-dar--l        06/02/2025  11:17 PM                NVIDIA Corporation Common Stock
-dar--l        06/03/2025  12:20 PM                Palo_Alto_Networks_Inc
-dar--l        06/03/2025   2:06 PM                Paychex_Inc
-dar--l        06/03/2025   1:03 AM                PepsiCo_Inc
-dar--l        06/03/2025  11:26 AM                QUALCOMM_Incorporated
-dar--l        06/03/2025  12:06 PM                Regeneron_Pharmaceuticals_Inc
-dar--l        06/03/2025  12:46 PM                Ross_Stores_Inc
-dar--l        06/03/2025  11:36 AM                Starbucks_Corporation
-dar--l        06/03/2025   1:23 AM                T-Mobile_US_Inc
-dar--l        06/03/2025  12:19 AM                Tesla Inc. Common Stock
-dar--l        06/03/2025  11:06 AM                Texas_Instruments_Incorporated
-dar--l        06/03/2025  12:00 PM                Vertex_Pharmaceuticals_Incorporated
-dar--l        06/03/2025   2:18 PM                Warner_Bros_Discovery_Inc
-
-
-
-
-
-
-import os
-
-# Assuming your script is running inside Data_Cleaning folder
-current_dir = os.getcwd()  # will give .../Project/Data_Cleaning
-
-# Move up one directory and then into Data_Ingestion
-input_path = os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data.json')
-output_path = os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data_cleaned.json')
-
-# Normalize the paths to remove .. and make absolute if you want
-input_path = os.path.abspath(input_path)
-output_path = os.path.abspath(output_path)
-
-print("Input JSON path:", input_path)
-print("Output JSON path:", output_path)
-
-
-
-
+# utils/load_data.py
 import json
-import re
 import os
 
-current_dir = os.getcwd()
-input_path = os.path.abspath(os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data.json'))
-output_path = os.path.abspath(os.path.join(current_dir, '..', 'Data_Ingestion', 'final_speaker_role_content_data_cleaned.json'))
-
-pattern = r'\d{1,2}/\d{1,2}/\d{2,4}, \d{1,2}:\d{2} (AM|PM) [A-Z]{2,5} - Transcripts https?://\S+ \d{1,2}/\d{1,2}'
-
-def clean_content(text):
-    cleaned_text = re.sub(pattern, '', text)
-    cleaned_text = re.sub(r'\s+', ' ', cleaned_text).strip()
-    return cleaned_text
-
-# Rest of your code...
-
-# Sample ticker dictionary based on your company names — please adjust tickers as per your official list
-company_to_ticker = {
-    "Adobe_Inc": "ADBE",
-    "Advanced_Micro_Devices_Inc": "AMD",
-    "Alphabet Inc. Class A Common Stock": "GOOGL",
-    "Alphabet Inc. Class C Capital Stock": "GOOG",
-    "Amazon.com Inc. Common Stock": "AMZN",
-    "Amgen_Inc": "AMGN",
-    "Analog_Devices_Inc": "ADI",
-    "Apple Inc. Common Stock": "AAPL",
-    "Automatic_Data_Processing_Inc": "ADP",
-    "Biogen_Inc": "BIIB",
-    "Booking_Holdings_Inc": "BKNG",
-    "Broadcom Inc. Common Stock": "AVGO",
-    "Cadence_Design_Systems_Inc": "CDNS",
-    "Charter_Communications_Inc": "CHTR",
-    "Cintas_Corporation": "CTAS",
-    "Cisco_Systems_Inc": "CSCO",
-    "Costco_Wholesale_Corporation": "COST",
-    "Electronic_Arts_Inc": "EA",
-    "Exelon_Corporation": "EXC",
-    "Fiserv_Inc": "FISV",
-    "Fortinet_Inc": "FTNT",
-    "Gilead_Sciences_Inc": "GILD",
-    "Honeywell_International_Inc": "HON",
-    "IDEXX_Laboratories_Inc": "IDXX",
-    "Intel_Corporation": "INTC",
-    "Intuitive_Surgical_Inc": "ISRG",
-    "Intuit_Inc": "INTU",
-    "Keurig_Dr_Pepper_Inc": "KDP",
-    "KLA_Corporation": "KLAC",
-    "Lam_Research_Corporation": "LRCX",
-    "Marriott_International_Inc": "MAR",
-    "MercadoLibre_Inc": "MELI",
-    "Meta Platforms Inc. Class A Common Stock": "META",
-    "Micron_Technology_Inc": "MU",
-    "Microsoft Corporation Common Stock": "MSFT",
-    "Mondelez_International_Inc": "MDLZ",
-    "Monster_Beverage_Corporation": "MNST",
-    "NVIDIA Corporation Common Stock": "NVDA",
-    "Palo_Alto_Networks_Inc": "PANW",
-    "Paychex_Inc": "PAYX",
-    "PepsiCo_Inc": "PEP",
-    "QUALCOMM_Incorporated": "QCOM",
-    "Regeneron_Pharmaceuticals_Inc": "REGN",
-    "Ross_Stores_Inc": "ROST",
-    "Starbucks_Corporation": "SBUX",
-    "T-Mobile_US_Inc": "TMUS",
-    "Tesla Inc. Common Stock": "TSLA",
-    "Texas_Instruments_Incorporated": "TXN",
-    "Vertex_Pharmaceuticals_Incorporated": "VRTX",
-    "Warner_Bros_Discovery_Inc": "WBD",
-}
-
-# Load JSON
-with open(input_path, 'r', encoding='utf-8') as f:
-    data = json.load(f)
-
-# Process each record
-for record in data:
-    # Clean content
-    if 'content' in record:
-        record['content'] = clean_content(record['content'])
-    
-    # Add ticker field if company matches
-    company = record.get('company')
-    if company in company_to_ticker:
-        record['ticker'] = company_to_ticker[company]
-    else:
-        record['ticker'] = "UNKNOWN"
-
-# Save cleaned JSON
-with open(output_path, 'w', encoding='utf-8') as f:
-    json.dump(data, f, ensure_ascii=False, indent=2)
-
-print(f"Cleaned and enriched data saved to {output_path}")
-
-
-
-
-import json
-import re
-import os
-
-# Base path from Data_Cleaning/ accessing Data_Ingestion/
-base_path = os.path.join(os.path.dirname(__file__), '..', 'Data_Ingestion')
-input_file = os.path.join(base_path, 'final_speaker_role_content_data.json')
-output_file = os.path.join(base_path, 'final_cleaned_ticker_data.json')
-
-# Ticker mapping
-company_to_ticker = {
-    "Adobe_Inc": "ADBE",
-    "Advanced_Micro_Devices_Inc": "AMD",
-    "Alphabet Inc. Class A Common Stock": "GOOGL",
-    "Alphabet Inc. Class C Capital Stock": "GOOG",
-    "Amazon.com Inc. Common Stock": "AMZN",
-    "Amgen_Inc": "AMGN",
-    "Analog_Devices_Inc": "ADI",
-    "Apple Inc. Common Stock": "AAPL",
-    "Automatic_Data_Processing_Inc": "ADP",
-    "Biogen_Inc": "BIIB",
-    "Booking_Holdings_Inc": "BKNG",
-    "Broadcom Inc. Common Stock": "AVGO",
-    "Cadence_Design_Systems_Inc": "CDNS",
-    "Charter_Communications_Inc": "CHTR",
-    "Cintas_Corporation": "CTAS",
-    "Cisco_Systems_Inc": "CSCO",
-    "Costco_Wholesale_Corporation": "COST",
-    "Electronic_Arts_Inc": "EA",
-    "Exelon_Corporation": "EXC",
-    "Fiserv_Inc": "FISV",
-    "Fortinet_Inc": "FTNT",
-    "Gilead_Sciences_Inc": "GILD",
-    "Honeywell_International_Inc": "HON",
-    "IDEXX_Laboratories_Inc": "IDXX",
-    "Intel_Corporation": "INTC",
-    "Intuitive_Surgical_Inc": "ISRG",
-    "Intuit_Inc": "INTU",
-    "Keurig_Dr_Pepper_Inc": "KDP",
-    "KLA_Corporation": "KLAC",
-    "Lam_Research_Corporation": "LRCX",
-    "Marriott_International_Inc": "MAR",
-    "MercadoLibre_Inc": "MELI",
-    "Meta Platforms Inc. Class A Common Stock": "META",
-    "Micron_Technology_Inc": "MU",
-    "Microsoft Corporation Common Stock": "MSFT",
-    "Mondelez_International_Inc": "MDLZ",
-    "Monster_Beverage_Corporation": "MNST",
-    "NVIDIA Corporation Common Stock": "NVDA",
-    "Palo_Alto_Networks_Inc": "PANW",
-    "Paychex_Inc": "PAYX",
-    "PepsiCo_Inc": "PEP",
-    "QUALCOMM_Incorporated": "QCOM",
-    "Regeneron_Pharmaceuticals_Inc": "REGN",
-    "Ross_Stores_Inc": "ROST",
-    "Starbucks_Corporation": "SBUX",
-    "T-Mobile_US_Inc": "TMUS",
-    "Tesla Inc. Common Stock": "TSLA",
-    "Texas_Instruments_Incorporated": "TXN",
-    "Vertex_Pharmaceuticals_Incorporated": "VRTX",
-    "Warner_Bros_Discovery_Inc": "WBD"
-}
-
-# Improved multiline regex pattern with DOTALL flag to catch headers possibly on multiple lines
-pattern = re.compile(
-    r'\d{1,2}/\d{1,2}/\d{2,4},\s*'          # Date, e.g. 6/3/25,
-    r'\d{1,2}:\d{2}\s*(?:AM|PM)\s*'         # Time with AM/PM
-    r'[A-Z0-9\-]+\s*-\s*Transcripts\s*'     # e.g. ADBE - Transcripts
-    r'https?://\S+\s*'                       # URL (possibly on next line)
-    r'\d{1,2}/\d{1,2}',                      # Page number e.g. 3/18
-    flags=re.DOTALL
-)
-
-def clean_content(text: str) -> str:
-    """Remove noisy transcript header pattern and collapse all whitespace."""
-    if not isinstance(text, str):
-        return text
-    text = pattern.sub('', text)
-    return re.sub(r'\s+', ' ', text).strip()
-
-def get_ticker(company: str) -> str:
-    """Map company name to ticker symbol; return 'UNKNOWN' if not found."""
-    return company_to_ticker.get(company, "UNKNOWN")
-
-def main():
-    # Load JSON data
-    with open(input_file, 'r', encoding='utf-8') as f:
+def load_transcript_data(file_path='Data_Ingestion/final_cleaned_ticker_data.json'):
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
+    with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    return data
 
-    # Clean each record's content and add ticker field
+
+# utils/filter_data.py
+def filter_transcripts(data, company=None, year=None, quarter=None, keyword=None):
+    results = []
     for item in data:
-        item['content'] = clean_content(item.get('content', ''))
-        item['ticker'] = get_ticker(item.get('company', ''))
+        if company and company.lower() not in item['company'].lower():
+            continue
+        if year and int(item['year']) != int(year):
+            continue
+        if quarter and item['quarter'].upper() != quarter.upper():
+            continue
+        if keyword and keyword.lower() not in item['content'].lower():
+            continue
+        results.append(item)
+    return results
 
-    # Save cleaned output to file
-    with open(output_file, 'w', encoding='utf-8') as f_out:
-        json.dump(data, f_out, indent=4, ensure_ascii=False)
 
-    print(f"[✅] Cleaned and saved: {output_file}")
+# utils/validate_data.py
+def validate_transcripts(data):
+    required_fields = {'company', 'file_name', 'quarter', 'year', 'date', 'speaker', 'role', 'content'}
+    errors = []
+    for idx, item in enumerate(data):
+        missing = required_fields - item.keys()
+        if missing:
+            errors.append(f"Item {idx} is missing fields: {missing}")
+        elif not all(item[field] for field in required_fields):
+            errors.append(f"Item {idx} has empty fields")
+    return errors
 
-if __name__ == '__main__':
-    main()
+
+# main.py
+from utils.load_data import load_transcript_data
+from utils.filter_data import filter_transcripts
+from utils.validate_data import validate_transcripts
+
+# Step 1: Load
+data = load_transcript_data()
+
+# Step 2: Validate
+errors = validate_transcripts(data)
+if errors:
+    print("⚠️ Data validation errors found:")
+    for err in errors:
+        print(err)
+    exit(1)
+else:
+    print("✅ Data is valid.\n")
+
+# Step 3: Filter
+results = filter_transcripts(data, company='Apple', year=2025, quarter='Q1', keyword='sales')
+
+# Step 4: Show results
+for res in results:
+    print(f"{res['date']} - {res['speaker']} ({res['role']}):")
+    print(res['content'])
+    print('-' * 80)
+
+
