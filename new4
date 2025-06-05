@@ -281,3 +281,83 @@ if st.button("Search") and query:
         > {textwrap.shorten(item['content'], width=500, placeholder="...")}
         ---
         """)
+
+
+# rag_pipeline.py
+
+import json
+import faiss
+from sentence_transformers import SentenceTransformer
+from transformers import pipeline
+import textwrap
+
+class RAGFinancialAssistant:
+    def __init__(self,
+                 faiss_index_path="Data_Ingestion/faiss_index.bin",
+                 chunks_metadata_path="Data_Ingestion/chunks_metadata.json",
+                 embedding_model_name="sentence-transformers/all-MiniLM-L6-v2",
+                 generation_model_name="facebook/bart-large-cnn"):
+        
+        # Load FAISS index
+        print("Loading FAISS index...")
+        self.index = faiss.read_index(faiss_index_path)
+        
+        # Load chunks metadata
+        print("Loading chunk metadata...")
+        with open(chunks_metadata_path, "r", encoding="utf-8") as f:
+            self.chunks = json.load(f)
+        
+        # Load embedding model
+        print("Loading embedding model...")
+        self.embedder = SentenceTransformer(embedding_model_name)
+        
+        # Load generation model pipeline
+        print("Loading generation model...")
+        self.generator = pipeline("summarization", model=generation_model_name)
+
+    def search_chunks(self, query, top_k=5):
+        # Embed the query
+        q_emb = self.embedder.encode([query], convert_to_numpy=True).astype('float32')
+        
+        # Search in FAISS index
+        distances, indices = self.index.search(q_emb, top_k)
+        
+        # Collect the relevant chunks with metadata
+        results = []
+        for idx in indices[0]:
+            chunk = self.chunks[idx]
+            results.append(chunk)
+        return results, distances[0]
+
+    def generate_answer(self, query, top_k=5):
+        # Retrieve top relevant chunks
+        chunks, distances = self.search_chunks(query, top_k=top_k)
+        
+        # Combine their content into one context string (you can tune this)
+        context_text = " ".join([chunk['content'] for chunk in chunks])
+        
+        # Format input to generation model: you can prepend query to context if you want
+        input_text = f"Question: {query}\nContext: {context_text}"
+        
+        # Generate summary/answer (tune max_length & min_length as needed)
+        summary = self.generator(input_text, max_length=150, min_length=40, do_sample=False)
+        
+        return summary[0]['summary_text'], chunks, distances
+
+
+if __name__ == "__main__":
+    rag = RAGFinancialAssistant()
+    
+    user_query = input("Enter your financial query: ")
+    answer, retrieved_chunks, scores = rag.generate_answer(user_query, top_k=5)
+    
+    print("\n=== Generated Answer ===")
+    print(answer)
+    
+    print("\n=== Retrieved Chunks (metadata + truncated content) ===")
+    for i, chunk in enumerate(retrieved_chunks):
+        print(f"[{i+1}] {chunk['company']} | {chunk['date']} | Speaker: {chunk['speaker']} | Role: {chunk['role']}")
+        print(textwrap.shorten(chunk['content'], width=300, placeholder="..."))
+        print(f"Similarity score: {scores[i]:.4f}")
+        print("-" * 80)
+
